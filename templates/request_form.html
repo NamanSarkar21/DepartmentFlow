@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}New request · DepartmentFlow{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">REQUEST WORKFLOW</div><h1>New departmental request</h1><p>Provide the details needed for faculty review.</p></div><a class="btn secondary" href="{{ url_for('requests_list') }}">← Back to requests</a></div>
+<div class="form-layout"><section class="panel form-panel"><form method="post">
+<label>Request title <span class="required">*</span></label><input name="title" placeholder="e.g. UG seminar room booking" maxlength="150" required>
+<div class="form-row"><div><label>Activity category <span class="required">*</span></label><select name="category" required><option value="">Select category</option><option>Course / Curriculum</option><option>Examination</option><option>Project / Research</option><option>Event / Seminar</option><option>Infrastructure</option><option>Leave / Attendance</option><option>Other</option></select></div><div><label>Programme <span class="required">*</span></label><select name="program" required><option value="UG">Undergraduate (UG)</option><option value="PG">Postgraduate (PG)</option></select></div></div>
+<label>Description and justification <span class="required">*</span></label><textarea name="description" rows="6" placeholder="Describe the request, purpose, dates, resources required, and any supporting context..." required></textarea>
+<div class="workflow-hint"><span class="hint-icon">↗</span><div><strong>What happens next?</strong><p>Your request goes to faculty review first. If forwarded, the HOD makes the final decision.</p></div></div>
+<div class="form-actions"><a class="btn secondary" href="{{ url_for('requests_list') }}">Cancel</a><button class="btn primary" type="submit">Submit for review →</button></div>
+</form></section><aside class="side-note"><h3>Before you submit</h3><ul><li>Use a specific, descriptive title.</li><li>Include dates and resource requirements.</li><li>Choose the correct UG or PG programme.</li><li>You can track status and comments later.</li></ul></aside></div>
+{% endblock %}

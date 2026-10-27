@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Requests · DepartmentFlow{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">ACADEMIC ADMINISTRATION</div><h1>Department requests</h1><p>Submit, review, and track departmental activity requests.</p></div>{% if current_user.role in ['student','faculty'] %}<a class="btn primary" href="{{ url_for('new_request') }}">＋ New request</a>{% endif %}</div>
+<div class="panel table-panel">{% if rows %}<div class="table-wrap"><table><thead><tr><th>Request</th><th>Submitter</th><th>Programme</th><th>Status</th><th>Submitted</th><th></th></tr></thead><tbody>{% for r in rows %}<tr><td><a class="row-title" href="{{ url_for('request_detail', req_id=r.id) }}">{{ r.title }}</a><small>{{ r.category }}</small></td><td>{{ r.submitter }}</td><td><span class="program-tag">{{ r.program }}</span></td><td><span class="status {{ r.status|lower|replace(' ','-') }}">{{ r.status }}</span></td><td>{{ r.created_at[:10] }}</td><td><a class="icon-link" href="{{ url_for('request_detail', req_id=r.id) }}">↗</a></td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state"><div class="empty-icon">▤</div><h3>No requests found</h3><p>There are no requests to display yet.</p></div>{% endif %}</div>
+{% endblock %}

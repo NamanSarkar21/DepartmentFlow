@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · DepartmentFlow{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">OVERVIEW</div><h1>Good day, {{ current_user.name.split()[0] }}.</h1><p>Here is what is happening in your department today.</p></div>
+{% if current_user.role in ['student','faculty'] %}<a class="btn primary" href="{{ url_for('new_request') }}">＋ New request</a>{% else %}<a class="btn primary" href="{{ url_for('new_project') }}">＋ Publish project</a>{% endif %}</div>
+<div class="stats-grid">
+  <div class="stat-card"><span class="stat-label">Total requests</span><strong>{{ stats.requests }}</strong><span class="stat-note">Department-wide</span></div>
+  <div class="stat-card"><span class="stat-label">Awaiting decision</span><strong>{{ stats.pending }}</strong><span class="stat-note">In approval workflow</span></div>
+  <div class="stat-card"><span class="stat-label">Projects</span><strong>{{ stats.projects }}</strong><span class="stat-note">Available and allocated</span></div>
+  {% if current_user.role != 'student' %}<div class="stat-card"><span class="stat-label">Portal users</span><strong>{{ stats.users }}</strong><span class="stat-note">Across all roles</span></div>{% endif %}
+</div>
+<div class="section-heading"><div><h2>Recent requests</h2><p>Track requests and review their current status.</p></div><a class="text-link" href="{{ url_for('requests_list') }}">View all →</a></div>
+<div class="panel table-panel">
+{% if requests_rows %}
+<div class="table-wrap"><table><thead><tr><th>Request</th>{% if current_user.role != 'student' %}<th>Submitted by</th>{% endif %}<th>Programme</th><th>Status</th><th>Updated</th><th></th></tr></thead><tbody>
+{% for r in requests_rows %}<tr><td><a class="row-title" href="{{ url_for('request_detail', req_id=r.id) }}">{{ r.title }}</a><small>{{ r.category }}</small></td>{% if current_user.role != 'student' %}<td>{{ r.submitter }}</td>{% endif %}<td><span class="program-tag">{{ r.program }}</span></td><td><span class="status {{ r.status|lower|replace(' ','-') }}">{{ r.status }}</span></td><td>{{ r.updated_at[:10] }}</td><td><a class="icon-link" href="{{ url_for('request_detail', req_id=r.id) }}">↗</a></td></tr>{% endfor %}
+</tbody></table></div>
+{% else %}<div class="empty-state"><div class="empty-icon">▤</div><h3>No requests yet</h3><p>Submit a departmental activity request to start the approval process.</p><a class="btn primary" href="{{ url_for('new_request') }}">Create a request</a></div>{% endif %}
+</div>
+<div class="section-heading"><div><h2>{% if current_user.role == 'student' %}Projects open to you{% else %}Project allocation{% endif %}</h2><p>Browse projects and check allocation status.</p></div><a class="text-link" href="{{ url_for('projects_list') }}">View projects →</a></div>
+<div class="project-grid">{% for p in projects[:3] %}<article class="project-card"><div class="project-card-top"><span class="program-tag">{{ p.program }}</span><span class="status {{ p.status|lower }}">{{ p.status }}</span></div><h3>{{ p.title }}</h3><p>{{ p.description }}</p><div class="project-meta">Supervisor · {{ p.supervisor }}</div></article>{% else %}<div class="panel empty-inline">No projects to show yet.</div>{% endfor %}</div>
+{% endblock %}

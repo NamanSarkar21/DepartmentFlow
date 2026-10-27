@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Sign in · DepartmentFlow{% endblock %}
+{% block content %}
+<div class="login-layout">
+  <section class="login-intro">
+    <div class="eyebrow">DEPARTMENT WORKSPACE</div>
+    <h1>Academic activities,<br><em>moving forward.</em></h1>
+    <p>One clear place for departmental requests, approvals, and project allocation across UG and PG programmes.</p>
+    <div class="login-points"><span>✓ Transparent approval workflow</span><span>✓ UG / PG project allocation</span><span>✓ Trackable request status</span></div>
+  </section>
+  <section class="login-card">
+    <div class="eyebrow">WELCOME BACK</div><h2>Sign in to your account</h2><p class="muted">Use your departmental portal credentials.</p>
+    <form method="post">
+      <label>Email address</label><input type="email" name="email" placeholder="you@department.edu" required autofocus>
+      <label>Password</label><input type="password" name="password" placeholder="Enter your password" required>
+      <button class="btn primary full" type="submit">Sign in <span>→</span></button>
+    </form>
+    <div class="demo-box"><strong>Demo access</strong><p>Student: <code>student@dept.local</code></p><p>Password: <code>Student123!</code></p><small>Other role credentials are listed in README.md.</small></div>
+  </section>
+</div>
+{% endblock %}
